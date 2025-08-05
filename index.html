@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#121212] text-white">
+<head>
+  <script src="main.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEST</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans">
+  <div id="accountInfo" class="text-right px-6 py-2 text-sm"></div>
+
+  <!-- Navbar -->
+  <header class="flex items-center justify-between px-6 py-4 bg-[#1c1c1c] shadow-md">
+    <div class="text-2xl font-bold">GameZone</div>
+    <nav class="flex gap-6 text-sm font-medium">
+      <a href="#" class="hover:text-gray-300">Store</a>
+      <a href="https://www.youtube.com/@Xerse_Lol" target="_blank" class="hover:text-gray-300">News</a>
+      <a href="https://discord.gg/WJpvvbRF" target="_blank" class="hover:text-gray-300">Support</a>
+      <a href="signup.html" class="hover:text-gray-300">sign up</a>
+    </nav>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="relative h-[60vh] bg-cover bg-center" style="background-image: url('https://cdn2.unrealengine.com/egs-fortnite-epicgames-launcher-1920x1080-1920x1080-7b7e6b898f1b.jpg');">
+    <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-start px-12">
+      <h1 id="typingTitle" class="text-4xl md:text-5xl font-extrabold mb-4"></h1>
+      <p class="text-lg mb-6 max-w-md">Check them out! Download now on GameZone.</p>
+      <button id="downloadBtn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold">Download Now</button>
+    </div>
+  </section>
+
+  <!-- Game Cards -->
+  <section class="py-10 px-6">
+    <h2 class="text-3xl font-bold mb-6">today new released games!</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <!-- GTA V Card -->
+      <a href="https://store.epicgames.com/en-US/p/grand-theft-auto-v" target="_blank" class="block">
+  <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+    <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png"
+         alt="GTA V"
+         class="w-full h-48 object-cover" />
+    <div class="p-4">
+      <h3 class="text-xl font-semibold mb-2">GTA V</h3>
+      <p class="text-sm text-gray-400">Action-adventure game.</p>
+    </div>
+  </div>
+</a>
+
+      <!-- Rocket League Card -->
+<a href="https://store.epicgames.com/en-US/p/rocket-league" target="_blank" class="block">
+  <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/7e/Rocket_League_cover_art.jpg"
+         alt="Rocket League"
+         class="w-full h-48 object-cover" />
+    <div class="p-4">
+      <h3 class="text-xl font-semibold mb-2">Rocket League</h3>
+      <p class="text-sm text-gray-400">Soccer with cars!</p>
+    </div>
+  </div>
+</a>
+
+<!-- Alan Wake 2 Card -->
+<a href="https://store.epicgames.com/en-US/p/alan-wake-2" target="_blank" class="block">
+  <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+    <img src="https://assets-prd.ignimgs.com/2023/05/24/alan-wake-2-button-1684957081586.jpg"
+         alt="Alan Wake 2"
+         class="w-full h-48 object-cover" />
+    <div class="p-4">
+      <h3 class="text-xl font-semibold mb-2">Alan Wake 2</h3>
+      <p class="text-sm text-gray-400">Psychological horror game.</p>
+    </div>
+  </div>
+</a>
+
+    </div>
+  </section>
+<!-- Action Buttons Section -->
+<section class="py-6 text-center">
+  <button id="alertBtn" class="px-4 py-2 bg-blue-600 text-white rounded m-2">Show Alert</button>
+  <button id="changeBgBtn" class="px-4 py-2 bg-green-600 text-white rounded m-2">Change Background</button>
+  <button id="hideNewsletterBtn" class="px-4 py-2 bg-red-600 text-white rounded m-2">Hide Newsletter</button>
+</section>
+<!-- Newsletter Section -->
+<section class="bg-[#1c1c1c] py-10 px-6 text-center">
+  <h2 class="text-3xl font-bold mb-4">Subscribe to our News letter</h2>
+  <p class="text-lg mb-6">Get the latest news and updates directly to your inbox.</p>
+  <form id="newsletterForm" class="flex justify-center">
+    <input type="email" placeholder="Enter your email" required class="px-4 py-2 rounded-l-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600">
+    <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-lg text-white font-semibold">Subscribe</button>
+  </form>
+  <p id="newsletterThanks" class="text-green-400 mt-4 hidden">Thank you for following us!</p>
+</section>
+
+  <!-- Newsletter Thank You Modal -->
+<div id="newsletterModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#121212] rounded-lg p-8 text-center relative shadow-lg">
+    <button id="closeNewsletterModal" class="absolute top-2 right-2 text-2xl text-gray-400 hover:text-red-400">&times;</button>
+    <div class="text-2xl font-bold text-green-400 mb-2">Thank you for supporting us and following us &lt;3</div>
+  </div>
+</div>
+
+  <script>
+    // Action Buttons Functionality
+    document.getElementById('alertBtn').addEventListener('click', function() {
+      alert('This is an alert message!');
+    });
+
+    document.getElementById('changeBgBtn').addEventListener('click', function() {
+      document.body.style.backgroundColor = '#282c34';
+    });
+
+    document.getElementById('hideNewsletterBtn').addEventListener('click', function() {
+      document.querySelector('section.bg-[#1c1c1c]').style.display = 'none';
+    });
+
+    // Newsletter Form Submission
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const win = window.open();
+  if (win) {
+    win.document.write(`
+      <body style="background:#121212;color:#4ade80;display:flex;align-items:center;justify-content:center;height:100vh;font-size:2rem;font-family:sans-serif;text-align:center;">
+        Thank you for supporting us and following us&lt;3
+      </body>
+    `);
+    win.document.close();
+  }
+  document.getElementById('newsletterForm').reset();
+  document.getElementById('newsletterThanks').classList.remove('hidden');
+  document.getElementById('newsletterModal').classList.remove('hidden');
+});
+
+document.getElementById('closeNewsletterModal').addEventListener('click', function() {
+  document.getElementById('newsletterModal').classList.add('hidden');
+});
+
+    // Typing animation for the hero title
+const styles = [
+  { text: "Free games of the Week.", class: "font-mono text-blue-400" },
+  { text: "Free games of the Week.", class: "font-serif text-pink-400" },
+  { text: "Free games of the Week.", class: "font-bold text-green-400" }
+];
+
+const titleElem = document.getElementById('typingTitle');
+let styleIdx = 0;
+let charIdx = 0;
+let typing = true;
+
+function applyStyle(idx) {
+  titleElem.className = "text-4xl md:text-5xl font-extrabold mb-4 " + styles[idx].class;
+}
+
+function typeWriter() {
+  applyStyle(styleIdx);
+  const current = styles[styleIdx];
+  if (typing) {
+    if (charIdx <= current.text.length) {
+      titleElem.textContent = current.text.slice(0, charIdx);
+      charIdx++;
+      setTimeout(typeWriter, 90);
+    } else {
+      typing = false;
+      setTimeout(typeWriter, 1000); // Wait before deleting
+    }
+  } else {
+    if (charIdx >= 0) {
+      titleElem.textContent = current.text.slice(0, charIdx);
+      charIdx--;
+      setTimeout(typeWriter, 40);
+    } else {
+      typing = true;
+      styleIdx = (styleIdx + 1) % styles.length;
+      setTimeout(typeWriter, 500); // Wait before typing next style
+    }
+  }
+}
+
+// Optional: Blinking cursor effect
+titleElem.style.borderRight = '2px solid #60a5fa';
+titleElem.style.paddingRight = '8px';
+setInterval(() => {
+  titleElem.style.borderRight = titleElem.style.borderRight ? '' : '2px solid #60a5fa';
+}, 500);
+
+typeWriter();
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+  const text = "TEST";
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "test.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+  </script>
+  <footer class="bg-[#1c1c1c] text-gray-400 py-6 px-6 mt-10 text-sm text-center">
+  &copy; 2025 GameZone. All rights reserved.
+</footer>
+
+  </body>
+</html>

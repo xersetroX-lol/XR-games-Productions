@@ -3,22 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign Up</title>
+  <title>Sign Up - GameZone</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex items-center justify-center h-screen">
-  <form id="signupForm" class="bg-[#1e1e1e] p-8 rounded-lg shadow-lg w-80">
-    <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-    <input type="text" id="username" placeholder="Username" required class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white" />
-    <input type="password" id="password" placeholder="Password" required class="w-full mb-6 px-4 py-2 rounded bg-gray-800 text-white" />
-    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">Register</button>
-  </form>
+
+  <!-- Firebase SDKs (Compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+  <!-- CORRECTED: The ONLY Firebase configuration block, with your actual project details -->
   <script>
-    document.getElementById('signupForm').onsubmit = function(e) {
-      e.preventDefault();
-      localStorage.setItem('user', document.getElementById('username').value);
-      window.location.href = "HTML.html";
-    }
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWorEkwxYHzkNZAGLENySZ3ZdJGjsmWKk", // <-- Your correct API key
+      authDomain: "xr-game-productions.firebaseapp.com",
+      projectId: "xr-game-productions",
+      storageBucket: "xr-game-productions.firebasestorage.app", // Important for complete config
+      messagingSenderId: "726395997014", // Important for complete config
+      appId: "1:726395997014:web:f4e5251fac254a65b964f7", // Your correct app ID
+      measurementId: "G-HZ2LZ0RE69" // Include if using Google Analytics
+    };
+    firebase.initializeApp(firebaseConfig);
   </script>
+</head>
+<body class="flex items-center justify-center min-h-screen font-sans">
+  <div class="bg-[#1c1c1c] p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4">Sign Up</h1>
+    <form>
+      <input id="email" type="email" placeholder="Email" required class="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white" />
+      <input id="password" type="password" placeholder="Password" required class="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white" />
+      <button id="signupBtn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded text-white font-semibold">Create Account</button>
+    </form>
+    <p id="errorMsg" class="text-red-500 text-sm mt-3"></p>
+    <a href="index.html" class="block text-blue-400 mt-4 hover:underline">Back to Home</a>
+  </div>
+
+  <script>
+    document.querySelector("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+      const btn = document.getElementById("signupBtn");
+
+      errorMsg.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Creating Account...";
+
+      // This uses firebase.auth() which is correct for the compat SDKs loaded above.
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // user.sendEmailVerification(); // optional: uncomment if you want email verification
+          // localStorage.setItem('user', email); // optional: for display in index.html
+          window.location.href = "index.html"; // Redirect after successful signup
+        })
+        .catch((error) => {
+          errorMsg.textContent = error.message;
+          btn.disabled = false;
+          btn.textContent = "Create Account";
+        });
+    });
+  </script>
+
 </body>
 </html>
+  

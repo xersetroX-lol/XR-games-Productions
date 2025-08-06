@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="bg-[#121212] text-white">
 <head>
-  <script src="main.js"></script>
+  <!-- IMPORTANT: main.js is now loaded at the end of the body.
+       Remove the script tag for main.js from here. -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TEST</title>
@@ -18,6 +19,8 @@
       <a href="https://www.youtube.com/@Xerse_Lol" target="_blank" class="hover:text-gray-300">News</a>
       <a href="https://discord.gg/WJpvvbRF" target="_blank" class="hover:text-gray-300">Support</a>
       <a href="signup.html" class="hover:text-gray-300">sign up</a>
+      <!-- ADDED: The sign-out button code you requested -->
+      <button id="signOutBtn" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-white font-semibold hidden">Sign Out</button>
     </nav>
   </header>
 
@@ -101,6 +104,12 @@
   </div>
 </div>
 
+  <!-- IMPORTANT: Your main.js script MUST be loaded here, just before the closing </body> tag. -->
+  <!-- Also, since main.js uses 'import', it needs type="module" -->
+  <script type="module" src="main.js"></script>
+
+  <!-- Your existing inline scripts. -->
+  <!-- I've wrapped them into a single script tag and ensured the footer is outside of it. -->
   <script>
     // Action Buttons Functionality
     document.getElementById('alertBtn').addEventListener('click', function() {
@@ -116,93 +125,95 @@
     });
 
     // Newsletter Form Submission
-document.getElementById('newsletterForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const win = window.open();
-  if (win) {
-    win.document.write(`
-      <body style="background:#121212;color:#4ade80;display:flex;align-items:center;justify-content:center;height:100vh;font-size:2rem;font-family:sans-serif;text-align:center;">
-        Thank you for supporting us and following us&lt;3
-      </body>
-    `);
-    win.document.close();
-  }
-  document.getElementById('newsletterForm').reset();
-  document.getElementById('newsletterThanks').classList.remove('hidden');
-  document.getElementById('newsletterModal').classList.remove('hidden');
-});
+    document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const win = window.open();
+      if (win) {
+        win.document.write(`
+          <body style="background:#121212;color:#4ade80;display:flex;align-items:center;justify-content:center;height:100vh;font-size:2rem;font-family:sans-serif;text-align:center;">
+            Thank you for supporting us and following us&lt;3
+          </body>
+        `);
+        win.document.close();
+      }
+      document.getElementById('newsletterForm').reset();
+      document.getElementById('newsletterThanks').classList.remove('hidden');
+      document.getElementById('newsletterModal').classList.remove('hidden');
+    });
 
-document.getElementById('closeNewsletterModal').addEventListener('click', function() {
-  document.getElementById('newsletterModal').classList.add('hidden');
-});
+    document.getElementById('closeNewsletterModal').addEventListener('click', function() {
+      document.getElementById('newsletterModal').classList.add('hidden');
+    });
 
     // Typing animation for the hero title
-const styles = [
-  { text: "Free games of the Week.", class: "font-mono text-blue-400" },
-  { text: "Free games of the Week.", class: "font-serif text-pink-400" },
-  { text: "Free games of the Week.", class: "font-bold text-green-400" }
-];
+    const styles = [
+      { text: "Free games of the Week.", class: "font-mono text-blue-400" },
+      { text: "Free games of the Week.", class: "font-serif text-pink-400" },
+      { text: "Free games of the Week.", class: "font-bold text-green-400" }
+    ];
 
-const titleElem = document.getElementById('typingTitle');
-let styleIdx = 0;
-let charIdx = 0;
-let typing = true;
+    const titleElem = document.getElementById('typingTitle');
+    let styleIdx = 0;
+    let charIdx = 0;
+    let typing = true;
 
-function applyStyle(idx) {
-  titleElem.className = "text-4xl md:text-5xl font-extrabold mb-4 " + styles[idx].class;
-}
-
-function typeWriter() {
-  applyStyle(styleIdx);
-  const current = styles[styleIdx];
-  if (typing) {
-    if (charIdx <= current.text.length) {
-      titleElem.textContent = current.text.slice(0, charIdx);
-      charIdx++;
-      setTimeout(typeWriter, 90);
-    } else {
-      typing = false;
-      setTimeout(typeWriter, 1000); // Wait before deleting
+    function applyStyle(idx) {
+      titleElem.className = "text-4xl md:text-5xl font-extrabold mb-4 " + styles[idx].class;
     }
-  } else {
-    if (charIdx >= 0) {
-      titleElem.textContent = current.text.slice(0, charIdx);
-      charIdx--;
-      setTimeout(typeWriter, 40);
-    } else {
-      typing = true;
-      styleIdx = (styleIdx + 1) % styles.length;
-      setTimeout(typeWriter, 500); // Wait before typing next style
+
+    function typeWriter() {
+      applyStyle(styleIdx);
+      const current = styles[styleIdx];
+      if (typing) {
+        if (charIdx <= current.text.length) {
+          titleElem.textContent = current.text.slice(0, charIdx);
+          charIdx++;
+          setTimeout(typeWriter, 90);
+        } else {
+          typing = false;
+          setTimeout(typeWriter, 1000); // Wait before deleting
+        }
+      } else {
+        if (charIdx >= 0) {
+          titleElem.textContent = current.text.slice(0, charIdx);
+          charIdx--;
+          setTimeout(typeWriter, 40);
+        } else {
+          typing = true;
+          styleIdx = (styleIdx + 1) % styles.length;
+          setTimeout(typeWriter, 500); // Wait before typing next style
+        }
+      }
     }
-  }
-}
 
-// Optional: Blinking cursor effect
-titleElem.style.borderRight = '2px solid #60a5fa';
-titleElem.style.paddingRight = '8px';
-setInterval(() => {
-  titleElem.style.borderRight = titleElem.style.borderRight ? '' : '2px solid #60a5fa';
-}, 500);
+    // Optional: Blinking cursor effect
+    titleElem.style.borderRight = '2px solid #60a5fa';
+    titleElem.style.paddingRight = '8px';
+    setInterval(() => {
+      titleElem.style.borderRight = titleElem.style.borderRight ? '' : '2px solid #60a5fa';
+    }, 500);
 
-typeWriter();
+    typeWriter();
 
-document.getElementById('downloadBtn').addEventListener('click', function() {
-  const text = "TEST";
-  const blob = new Blob([text], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      const text = "TEST";
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
 
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = "test.txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "test.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
   </script>
-  <footer class="bg-[#1c1c1c] text-gray-400 py-6 px-6 mt-10 text-sm text-center">
-  &copy; 2025 GameZone. All rights reserved.
-</footer>
 
-  </body>
+  <!-- MOVED AND FIXED: Footer is now a proper HTML element outside of any script tags -->
+  <footer class="bg-[#1c1c1c] text-gray-400 py-6 px-6 mt-10 text-sm text-center">
+    &copy; 2025 GameZone. All rights reserved.
+  </footer>
+
+</body>
 </html>
